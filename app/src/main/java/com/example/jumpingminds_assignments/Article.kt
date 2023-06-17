@@ -1,6 +1,10 @@
 package com.example.jumpingminds_assignments
 
-data class Result(
+import androidx.room.Entity
+
+
+@Entity(tableName = "articles")
+data class Article(
     val events: List<Any>,
     val featured: Boolean,
     val id: Int,
