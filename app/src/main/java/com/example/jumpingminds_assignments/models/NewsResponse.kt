@@ -1,4 +1,6 @@
-package com.example.jumpingminds_assignments
+package com.example.jumpingminds_assignments.models
+
+import com.example.jumpingminds_assignments.models.Article
 
 data class NewsResponse(
     val count: Int,

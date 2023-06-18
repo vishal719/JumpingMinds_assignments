@@ -4,7 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="15dp"
+    app:cardCornerRadius="22dp"
+    android:layout_marginBottom="5dp"
+    app:cardElevation="1dp"
     app:cardUseCompatPadding="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -13,10 +15,11 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView"
-            android:layout_width="130dp"
-            android:layout_height="130dp"
-            app:cardCornerRadius="15dp"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            app:cardCornerRadius="22dp"
             app:cardUseCompatPadding="true"
+            app:cardElevation="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -37,7 +40,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="16dp"
             android:text="NASASpaceflight"
-            android:textSize="14dp"
+            android:textSize="12dp"
             android:textColor="#30556E"
             app:layout_constraintStart_toEndOf="@+id/cardView"
             app:layout_constraintTop_toTopOf="@+id/cardView" />
@@ -55,7 +58,7 @@
             android:maxLines="2"
             android:text="Launch Roundup – Rocket Lab launches first HASTE mission; SpaceX to launch Satria"
             android:textColor="@color/black"
-            android:textSize="16dp"
+            android:textSize="14dp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/cardView"
@@ -69,15 +72,15 @@
             android:src="@drawable/ic_round_calendar_month_24"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/headding"
-            app:tint="@color/teal_700" />
+            app:tint="#A308253F" />
 
         <TextView
             android:id="@+id/date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="24 Jan, 12:50:24"
-            android:textSize="14dp"
-            android:layout_marginStart="10dp"
+            android:textSize="12dp"
+            android:layout_marginStart="6dp"
             app:layout_constraintBottom_toBottomOf="@+id/imageView2"
             app:layout_constraintStart_toEndOf="@+id/imageView2"
             app:layout_constraintTop_toTopOf="@+id/imageView2" />

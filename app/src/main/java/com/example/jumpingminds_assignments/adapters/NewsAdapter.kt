@@ -11,10 +11,12 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.jumpingminds_assignments.Article
+import com.example.jumpingminds_assignments.models.Article
 import com.example.jumpingminds_assignments.R
+import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 class NewsAdapter : RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
 
@@ -56,7 +58,7 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
     override fun onBindViewHolder(holder: ArticleViewHolder, position: Int) {
         val article = differ.currentList[position]
 
-        Glide.with(holder.image.context).load(article.image_url).into(holder.image)
+        Glide.with(holder.image.context).load(article.image_url).placeholder(R.drawable.app_logo).into(holder.image)
         holder.author.setText(article.news_site)
         holder.heading.setText(article.title)
         holder.date.setText(format(article.published_at))
@@ -71,16 +73,12 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
     @RequiresApi(Build.VERSION_CODES.O)
     fun format(timestamp:String): String {
 
-        val dateTime = LocalDateTime.parse(timestamp, DateTimeFormatter.ISO_INSTANT)
-        val month = dateTime.month.toString()
-        val date = dateTime.dayOfMonth
-        val hour = dateTime.hour
-        val minute = dateTime.minute
-        val second = dateTime.second
+        val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault())
+        val outputFormat = SimpleDateFormat("MMM d, HH:mm", Locale.getDefault())
 
-        val result: String = "$month $date, $hour:$minute:$second"
-
-        return result
+        val date = inputFormat.parse(timestamp)
+        val date1 = outputFormat.format(date)
+        return date1.toString()
     }
 }
 

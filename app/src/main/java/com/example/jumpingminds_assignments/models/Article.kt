@@ -1,4 +1,4 @@
-package com.example.jumpingminds_assignments
+package com.example.jumpingminds_assignments.models
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
