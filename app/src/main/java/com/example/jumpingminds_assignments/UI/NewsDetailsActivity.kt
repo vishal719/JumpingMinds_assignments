@@ -4,16 +4,21 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.annotation.RequiresApi
+import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.jumpingminds_assignments.R
 import com.example.jumpingminds_assignments.databinding.ActivityNewsBinding
 import com.example.jumpingminds_assignments.databinding.ActivityNewsDetailsBinding
+import com.example.jumpingminds_assignments.db.ArticleDatabase
 import com.example.jumpingminds_assignments.models.Article
+import com.example.jumpingminds_assignments.repository.NewsRepository
+import com.google.android.material.snackbar.Snackbar
 import java.text.SimpleDateFormat
 import java.util.Locale
 
 class NewsDetailsActivity : AppCompatActivity() {
 
+    lateinit var viewModel: NewsViewModel
     lateinit var binding: ActivityNewsDetailsBinding
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -21,6 +26,10 @@ class NewsDetailsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityNewsDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val newsRepository = NewsRepository(ArticleDatabase(this))
+        val viewModelProviderFactory = NewsViewModelProviderFactory(application, newsRepository)
+        viewModel = ViewModelProvider(this, viewModelProviderFactory).get(NewsViewModel::class.java)
 
         val article = intent.getSerializableExtra("news") as? Article
 
@@ -30,6 +39,13 @@ class NewsDetailsActivity : AppCompatActivity() {
             binding.newsAuthor.setText(article.news_site)
             binding.newsBody.setText(article.summary)
             binding.newsDate.setText(format(article.published_at))
+        }
+
+        binding.save.setOnClickListener {
+            if (article != null) {
+                viewModel.saveArticle(article)
+            }
+            Snackbar.make(it, "Article saved successfully", Snackbar.LENGTH_SHORT).show()
         }
     }
 
