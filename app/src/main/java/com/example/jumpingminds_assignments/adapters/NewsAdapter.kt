@@ -1,5 +1,6 @@
 package com.example.jumpingminds_assignments.adapters
 
+import android.content.Intent
 import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
@@ -7,12 +8,14 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.jumpingminds_assignments.models.Article
 import com.example.jumpingminds_assignments.R
+import com.example.jumpingminds_assignments.UI.NewsDetailsActivity
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -26,6 +29,7 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
         val heading:TextView = itemView.findViewById(R.id.headding)
         val author:TextView = itemView.findViewById(R.id.author)
         val date:TextView = itemView.findViewById(R.id.date)
+        val card:CardView = itemView.findViewById(R.id.news_card)
     }
 
     private val differCallback = object : DiffUtil.ItemCallback<Article>() {
@@ -62,6 +66,12 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
         holder.author.setText(article.news_site)
         holder.heading.setText(article.title)
         holder.date.setText(format(article.published_at))
+
+        holder.card.setOnClickListener {
+            val intent: Intent = Intent(holder.itemView.context, NewsDetailsActivity::class.java)
+            intent.putExtra("news", article)
+            holder.itemView.context.startActivity(intent)
+        }
     }
 
     private var onItemClickListener: ((Article) -> Unit)? = null

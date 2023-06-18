@@ -1,5 +1,6 @@
 package com.example.jumpingminds_assignments.UI.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -7,9 +8,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.jumpingminds_assignments.R
 import com.example.jumpingminds_assignments.UI.NewsActivity
+import com.example.jumpingminds_assignments.UI.NewsDetailsActivity
 import com.example.jumpingminds_assignments.UI.NewsViewModel
 import com.example.jumpingminds_assignments.adapters.NewsAdapter
 import com.example.jumpingminds_assignments.databinding.FragmentNewsBinding
@@ -38,6 +41,12 @@ class NewsFragment : Fragment(R.layout.fragment_news) {
         binding.rvBreakingNews.apply {
             adapter = newsAdapter
             layoutManager = LinearLayoutManager(activity)
+        }
+
+        newsAdapter.setOnItemClickListener {
+            val intent: Intent = Intent(context, NewsDetailsActivity::class.java)
+            intent.putExtra("news",it)
+            startActivity(intent)
         }
 
         viewModel.breakingNews.observe(viewLifecycleOwner, Observer { response ->
