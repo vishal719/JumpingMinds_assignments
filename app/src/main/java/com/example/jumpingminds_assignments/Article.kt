@@ -1,15 +1,15 @@
 package com.example.jumpingminds_assignments
 
 import androidx.room.Entity
+import androidx.room.PrimaryKey
 
 
 @Entity(tableName = "articles")
 data class Article(
-    val events: List<Any>,
     val featured: Boolean,
+    @PrimaryKey(autoGenerate = true)
     val id: Int,
     val image_url: String,
-    val launches: List<Any>,
     val news_site: String,
     val published_at: String,
     val summary: String,
