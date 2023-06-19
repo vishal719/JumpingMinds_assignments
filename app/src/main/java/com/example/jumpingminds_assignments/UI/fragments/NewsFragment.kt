@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,6 +18,7 @@ import com.example.jumpingminds_assignments.UI.NewsDetailsActivity
 import com.example.jumpingminds_assignments.UI.NewsViewModel
 import com.example.jumpingminds_assignments.adapters.NewsAdapter
 import com.example.jumpingminds_assignments.databinding.FragmentNewsBinding
+import com.example.jumpingminds_assignments.models.Article
 import com.example.jumpingminds_assignments.util.Resource
 
 
@@ -30,7 +33,7 @@ class NewsFragment : Fragment(R.layout.fragment_news) {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentNewsBinding.inflate(inflater, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_news, container, false)
         return binding.root
     }
 
@@ -54,20 +57,23 @@ class NewsFragment : Fragment(R.layout.fragment_news) {
                 is Resource.Success -> {
                     hideProgressBar()
                     response.data?.let { newsResponse ->
-                        newsAdapter.differ.submitList(newsResponse.results)
+                        newsAdapter.differ.submitList(newsResponse.results.toList())
+                        cacheData(newsResponse.results.toList())
                     }
                 }
                 is Resource.Error -> {
                     hideProgressBar()
+                    viewModel.getCachedNews().observe(viewLifecycleOwner, Observer { articles ->
+                        newsAdapter.differ.submitList(articles)
+                    })
+
                     response.message?.let { message ->
-                        Log.e("TAG", "An error occured: $message")
+                        Toast.makeText(activity, "No Internet", Toast.LENGTH_LONG).show()
                     }
                 }
                 is Resource.Loading -> {
                     showProgressBar()
                 }
-
-                else -> {}
             }
         })
     }
@@ -80,4 +86,14 @@ class NewsFragment : Fragment(R.layout.fragment_news) {
         binding.paginationProgressBar.visibility = View.VISIBLE
     }
 
+    var isError = false
+    var isLoading = false
+    var isLastPage = false
+    var isScrolling = false
+
+    fun cacheData(list:List<Article>?){
+        list?.forEach { item ->
+            viewModel.cacheArticle(item)
+        }
+    }
 }

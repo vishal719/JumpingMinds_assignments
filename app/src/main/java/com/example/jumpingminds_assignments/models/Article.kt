@@ -18,3 +18,17 @@ data class Article(
     val updated_at: String,
     val url: String
 ): Serializable
+
+@Entity(tableName = "cache")
+data class ArticleCache(
+    val featured: Boolean,
+    @PrimaryKey(autoGenerate = true)
+    val id: Int,
+    val image_url: String,
+    val news_site: String,
+    val published_at: String,
+    val summary: String,
+    val title: String,
+    val updated_at: String,
+    val url: String
+): Serializable

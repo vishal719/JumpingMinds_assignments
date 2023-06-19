@@ -62,6 +62,11 @@ class NewsViewModel(app: Application, val newsRepository: NewsRepository) :  And
         return Resource.Error(response.message())
     }
 
+    fun cacheArticle(article: Article) = viewModelScope.launch {
+        newsRepository.cacheInsert(article)
+    }
+    fun getCachedNews() = newsRepository.getCachedNews()
+
     fun saveArticle(article: Article) = viewModelScope.launch {
         newsRepository.upsert(article)
     }
@@ -72,7 +77,7 @@ class NewsViewModel(app: Application, val newsRepository: NewsRepository) :  And
         searchNews.postValue(Resource.Loading())
         try {
             if(hasInternetConnection()) {
-                val response = newsRepository.searchNews(searchQuery, searchNewsPage)
+                val response = newsRepository.searchNews(searchQuery)
                 searchNews.postValue(handleSearchNewsResponse(response))
             } else {
                 searchNews.postValue(Resource.Error("No internet connection"))
