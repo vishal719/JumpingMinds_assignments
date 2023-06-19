@@ -63,6 +63,8 @@ class NewsFragment : Fragment(R.layout.fragment_news) {
                 }
                 is Resource.Error -> {
                     hideProgressBar()
+
+                    // Inflating cached items
                     viewModel.getCachedNews().observe(viewLifecycleOwner, Observer { articles ->
                         newsAdapter.differ.submitList(articles)
                     })

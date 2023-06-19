@@ -10,9 +10,9 @@ interface NewsAPI {
     @GET("v4/articles/")
     suspend fun getNews(): Response<NewsResponse>
 
-    @GET("v2/articles/")
+    @GET("v4/articles")
     suspend fun searchForNews(
-        @Query("q")
+        @Query("news_site")
         searchQuery: String
     ): Response<NewsResponse>
 

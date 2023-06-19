@@ -21,10 +21,8 @@ import java.io.IOException
 class NewsViewModel(app: Application, val newsRepository: NewsRepository) :  AndroidViewModel(app) {
 
     val breakingNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
-    var breakingNewsPage = 1
 
     val searchNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
-    var searchNewsPage = 1
 
     var searchNewsResponse: NewsResponse? = null
     var newSearchQuery:String? = null

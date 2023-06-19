@@ -67,7 +67,7 @@ class SearchFragment : Fragment() {
                 is Resource.Success -> {
                     hideProgressBar()
                     response.data?.let { newsResponse ->
-                        newsAdapter.differ.submitList(newsResponse.results)
+                        newsAdapter.differ.submitList(newsResponse.results.toList())
                     }
                 }
                 is Resource.Error -> {

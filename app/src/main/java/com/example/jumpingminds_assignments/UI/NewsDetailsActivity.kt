@@ -47,6 +47,10 @@ class NewsDetailsActivity : AppCompatActivity() {
             }
             Snackbar.make(it, "Article saved successfully", Snackbar.LENGTH_SHORT).show()
         }
+
+        binding.back.setOnClickListener{
+            finish()
+        }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
